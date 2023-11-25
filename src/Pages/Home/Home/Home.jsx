@@ -1,8 +1,13 @@
+import About from "../About/About";
+import Banner from "../Banner/Banner";
+import Packages from "../Packages/Packages";
 
 const Home = () => {
     return (
         <div>
-            <h2 className="text-center font-bold text-6xl text-emerald-700">This is AssetPulse</h2>
+            <Banner></Banner>
+            <About></About>
+            <Packages></Packages>
         </div>
     );
 };
