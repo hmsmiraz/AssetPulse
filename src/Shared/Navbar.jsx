@@ -1,19 +1,40 @@
 import { Link } from "react-router-dom";
+import UseAuth from "../Hooks/UseAuth";
+import useAdmin from "../Hooks/useAdmin";
+import useEmployee from "../Hooks/useEmployee";
 
 const Navbar = () => {
+  const { user, logOut } = UseAuth();
+  const [isAdmin] = useAdmin();
+  const [isEmployee] = useEmployee();
   const navLinks = (
     <>
       <li>
         <Link to={"/"}>Home</Link>
       </li>
       <li>
-        <Link to={"/"}>Join as Employee</Link>
+        <Link to={"/addHrAdmin"}>Join as HR/Admin</Link>
       </li>
       <li>
-        <Link to={"/"}>Join as HR/Admin</Link>
+        <Link to={"/addEmployee"}>Join as Employee</Link>
       </li>
+      {user && isAdmin && (
+        <li>
+          <Link to={"/dashboard/adminHome"}>Dashboard</Link>
+        </li>
+      )}
+       {user && isEmployee && (
+        <li>
+          <Link to={"/dashboard/adminHome"}>Employee</Link>
+        </li>
+      )}
     </>
   );
+  const handleLogout = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.log(error));
+  };
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -48,8 +69,21 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
       <div className="navbar-end">
-        <Link>
-        <button className="btn btn-neutral">Login</button></Link>
+        {user ? (
+          <>
+            <Link>
+              <button onClick={handleLogout} className="btn btn-neutral">
+                Logout
+              </button>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to={"/login"}>
+              <button className="btn btn-neutral">Login</button>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

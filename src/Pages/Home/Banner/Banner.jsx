@@ -46,13 +46,13 @@ const Banner = () => {
     {
       url: "https://i.ibb.co/dfCPbwB/hr.jpg",
       caption:
-        "Unlock the Power of Code: Exploring the World of Programming 🚀",
+        "Efficiency Unleashed: Admin Tools for Seamless Management.",
       link: "/addHrAdmin",
       buttonText: "Join as HR/Admin",
     },
     {
       url: "https://i.ibb.co/5Wcckmn/employee.jpg",
-      caption: "From Zero to Hero: Your Journey Through the Code Jungle 🌐",
+      caption: "Elevate Your Role: Tools for Productivity and Growth.",
       link: "/addEmployee",
       buttonText: "Join as an Employee",
     },

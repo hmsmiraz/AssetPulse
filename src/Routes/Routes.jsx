@@ -3,6 +3,7 @@ import MainLayouts from "../Layouts/MainLayouts";
 import Home from "../Pages/Home/Home/Home";
 import AddEmployee from "../Pages/AddEmployee/AddEmployee";
 import AddHrAdmin from "../Pages/AddHrAdmin/addHrAdmin";
+import Login from "../Pages/Login/Login";
 
 export const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
         {
             path: '/addEmployee',
             element: <AddEmployee></AddEmployee>,
+        },
+        {
+            path: '/login',
+            element: <Login></Login>,
         },
       ]
     },
