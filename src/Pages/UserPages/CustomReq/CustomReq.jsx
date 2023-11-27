@@ -1,10 +1,13 @@
 import { useForm } from "react-hook-form";
 import SharedTitle from "../../../Shared/SharedTitle";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
+import Swal from "sweetalert2";
 
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const CustomReq = () => {
   const {
-    // reset,
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -16,11 +19,40 @@ const CustomReq = () => {
       additionalInfo: "",
       price: 0,
       image: "",
+      date: "",
     },
   });
   const axiosPublic = useAxiosPublic();
   const onSubmit = async (data) => {
     console.log("Asset data:", data);
+    const imageFile = { image: data.image[0] };
+    const res = await axiosPublic.post(image_hosting_api, imageFile, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    if (res.data.success) {
+    const assetReq = {
+      name: data.name,
+      type: data.type,
+      reason: data.reason,
+      additionalInfo: data.additionalInfo,
+      price: parseFloat(data.price),
+      image: res.data.data.display_url,
+      date: data.date,
+    };
+    const result = await axiosPublic.post('/customReq', assetReq)
+    if(result.data.insertedId){
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: `${data.name} add to customReqDB.`,
+        showConfirmButton: false,
+        timer: 1500
+      });
+    }
+    reset();
+    }
   };
 
   return (
@@ -107,12 +139,27 @@ const CustomReq = () => {
               className="input input-bordered w-full"
             />
           </div>
-        </div>
-        <div className="mt-4 flex justify-center ">
-          <button type="submit" className=" text-white btn btn-primary w-28">
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Today Date</span>
+            </label>
+            <input
+              type="date"
+              placeholder="enter the today date"
+              {...register("date", { required: true })}
+              className="input input-bordered w-full"
+            />
+            {errors.date && (
+              <span className="error">Today date is required</span>
+            )}
+          </div>
+          <div className="mt-9 ">
+          <button type="submit" className=" text-white btn btn-primary w-full">
             Submit
           </button>
         </div>
+        </div>
+ 
       </form>
     </div>
   );
