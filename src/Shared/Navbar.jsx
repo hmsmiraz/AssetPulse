@@ -9,26 +9,90 @@ const Navbar = () => {
   const [isEmployee] = useEmployee();
   const navLinks = (
     <>
+      {/* navbar for normal user */}
       <li>
-        <Link to={"/"}>Home</Link>
+        <Link
+          to={
+            user && isEmployee
+              ? "/userHome"
+              : user && isAdmin
+              ? "/adminHome"
+              : "/"
+          }
+        >
+          Home
+        </Link>
       </li>
-      <li>
-        <Link to={"/addHrAdmin"}>Join as HR/Admin</Link>
-      </li>
-      <li>
-        <Link to={"/addAsset"}>AddAsset</Link>
-      </li>
-      <li>
-        <Link to={"/addEmployee"}>Join as Employee</Link>
-      </li>
-      {user && isAdmin && (
+      {!user && (
         <li>
-          <Link to={"/dashboard/adminHome"}>Dashboard</Link>
+          <Link to={"/addHrAdmin"}>Join as HR/Admin</Link>
         </li>
       )}
-       {user && isEmployee && (
+      {!user && (
         <li>
-          <Link to={"/dashboard/adminHome"}>Employee</Link>
+          <Link to={"/addEmployee"}>Join as Employee</Link>
+        </li>
+      )}
+      {/* admin nav */}
+      {user && isAdmin && (
+        <li>
+          <Link to={"/assetList"}>Asset List</Link>
+        </li>
+      )}
+      {user && isAdmin && (
+        <li>
+          <Link to={"/addAsset"}>Add Asset</Link>
+        </li>
+      )}
+      {user && isAdmin && (
+        <li>
+          <Link to={"/allRequest"}>ALL Requests</Link>
+        </li>
+      )}
+      {user && isAdmin && (
+        <li>
+          <Link to={"/customReqList"}>Custom Requests List</Link>
+        </li>
+      )}
+      {user && isAdmin && (
+        <li>
+          <Link to={"/employeeList"}>My Employee List</Link>
+        </li>
+      )}
+      {user && isAdmin && (
+        <li>
+          <Link to={"/addAnEmployee"}>Add Employee</Link>
+        </li>
+      )}
+      {user && isAdmin && (
+        <li>
+          <Link to={"/adminProfile"}>Profile</Link>
+        </li>
+      )}
+      {/* employee nav */}
+      {user && isEmployee && (
+        <li>
+          <Link to={"/myAssets"}>My Assets</Link>
+        </li>
+      )}
+      {user && isEmployee && (
+        <li>
+          <Link to={"/myTeams"}>My Teams</Link>
+        </li>
+      )}
+      {user && isEmployee && (
+        <li>
+          <Link to={"/reqAsset"}>Request Asset</Link>
+        </li>
+      )}
+      {user && isEmployee && (
+        <li>
+          <Link to={"/CustomReq"}>Custom Request</Link>
+        </li>
+      )}
+      {user && isEmployee && (
+        <li>
+          <Link to={"/userProfile"}>Profile</Link>
         </li>
       )}
     </>
