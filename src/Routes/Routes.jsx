@@ -4,6 +4,7 @@ import Home from "../Pages/Home/Home/Home";
 import AddEmployee from "../Pages/AddEmployee/AddEmployee";
 import AddHrAdmin from "../Pages/AddHrAdmin/addHrAdmin";
 import Login from "../Pages/Login/Login";
+import AddAsset from "../Pages/AddAsset/AddAsset";
 
 export const router = createBrowserRouter([
     {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
         {
             path: '/addEmployee',
             element: <AddEmployee></AddEmployee>,
+        },
+        {
+            path: '/addAsset',
+            element: <AddAsset></AddAsset>,
         },
         {
             path: '/login',

@@ -16,6 +16,9 @@ const Navbar = () => {
         <Link to={"/addHrAdmin"}>Join as HR/Admin</Link>
       </li>
       <li>
+        <Link to={"/addAsset"}>AddAsset</Link>
+      </li>
+      <li>
         <Link to={"/addEmployee"}>Join as Employee</Link>
       </li>
       {user && isAdmin && (
