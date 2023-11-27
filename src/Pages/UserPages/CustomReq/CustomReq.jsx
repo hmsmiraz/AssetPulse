@@ -1,8 +1,119 @@
+import { useForm } from "react-hook-form";
+import SharedTitle from "../../../Shared/SharedTitle";
+import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
 const CustomReq = () => {
+  const {
+    // reset,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      type: "returnable",
+      reason: "",
+      additionalInfo: "",
+      price: 0,
+      image: "",
+    },
+  });
+  const axiosPublic = useAxiosPublic();
+  const onSubmit = async (data) => {
+    console.log("Asset data:", data);
+  };
+
   return (
-    <div>
-      <h2>Make a Custom Request</h2>
+    <div className="my-5">
+      <SharedTitle heading={"Make a Custom Request"}></SharedTitle>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-2">
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Asset Name</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Asset Name"
+              {...register("name", { required: true })}
+              className="input input-bordered w-full"
+            />
+            {errors.name && (
+              <span className="error">Asset name is required</span>
+            )}
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Asset Type</span>
+            </label>
+            <select
+              {...register("type", { required: true })}
+              className="input input-bordered w-full"
+            >
+              <option value="returnable">Returnable</option>
+              <option value="nonReturnable">Non-returnable</option>
+            </select>
+            {errors.type && (
+              <span className="error">Asset type is required</span>
+            )}
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Why You Need This</span>
+            </label>
+            <textarea
+              placeholder="Reason for requesting asset"
+              {...register("reason", { required: true })}
+              className="textarea textarea-bordered w-full"
+            ></textarea>
+            {errors.reason && <span className="error">Reason is required</span>}
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Additional Information</span>
+            </label>
+            <textarea
+              placeholder="Additional information about the asset"
+              {...register("additionalInfo", { required: true })}
+              className="textarea textarea-bordered w-full"
+            ></textarea>
+            {errors.additionalInfo && (
+              <span className="error">additionalInfo is required</span>
+            )}
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Asset Price</span>
+            </label>
+            <input
+              type="number"
+              min={0}
+              step={0.01}
+              placeholder="Asset Price"
+              {...register("price", { required: true })}
+              className="input input-bordered w-full"
+            />
+            {errors.price && (
+              <span className="error">Asset price is required</span>
+            )}
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Image</span>
+            </label>
+            <input
+              type="file"
+              {...register("image")}
+              className="input input-bordered w-full"
+            />
+          </div>
+        </div>
+        <div className="mt-4 flex justify-center ">
+          <button type="submit" className=" text-white btn btn-primary w-28">
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

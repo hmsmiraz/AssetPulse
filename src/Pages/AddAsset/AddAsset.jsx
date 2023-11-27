@@ -146,12 +146,3 @@ const AddAsset = () => {
 
 export default AddAsset;
 
-// const AddAsset = () => {
-//     return (
-//         <div>
-
-//         </div>
-//     );
-// };
-
-// export default AddAsset;
