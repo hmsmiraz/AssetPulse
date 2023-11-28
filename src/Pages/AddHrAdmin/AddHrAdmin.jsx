@@ -3,6 +3,7 @@ import SharedTitle from "../../Shared/SharedTitle";
 import UseAuth from "../../Hooks/UseAuth";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import axios from "axios";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -13,48 +14,47 @@ const AddHrAdmin = () => {
   const axiosPublic = useAxiosPublic();
   const onSubmit = async (data) => {
     // console.log(data);
-    const imageFile = { image: data.image[0] };
+    // const imageFile = { image: data.image[0] };
     // const companyLogo = { companyLogo: data.companyLogo[0] };
-    // const imageFile = new FormData();
-    // imageFile.append("image", data.image[0]);
+    const imageFile = new FormData();
+    imageFile.append("image", data.image[0]);
 
-    // const companyLogo = new FormData();
-    // companyLogo.append("companyLogo", data.companyLogo[0]);
-    // try {
-    //   const [imageResponse, logoResponse] = await Promise.all([
-    //     axiosPublic.post(image_hosting_api, imageFile, {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     }),
-    //     axiosPublic.post(image_hosting_api, companyLogo, {
-    //       headers: {
-    //         "Content-Type": "multipart/form-data",
-    //       },
-    //     }),
-    //   ]);
-
-    const res = await axiosPublic.post(
-      image_hosting_api,
-      imageFile,
-      // { image: imageFile, companyLogo: companyLogo },
-      {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      }
-    );
-    console.log(res);
+    const companyLogo = new FormData();
+    companyLogo.append("image", data.companyLogo[0]);
+    
+      const [imageResponse, logoResponse] = await Promise.all([
+        axios.post(image_hosting_api, imageFile, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }),
+        axios.post(image_hosting_api, companyLogo, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }),
+      ]);
+    // const res = await axios.post(
+    //   image_hosting_api,
+    //   // imageFile,
+    //   { image: imageFile, companyLogo: companyLogo },
+    //   {
+    //     headers: {
+    //       "content-type": "multipart/form-data",
+    //     },
+    //   }
+    // );
+    // console.log(res);
     // console.log(imageResponse, logoResponse);
-    // if (imageResponse.data.success && logoResponse.data.success) {
-    if (res.data.success) {
+    if (imageResponse.data.success && logoResponse.data.success) {
+    // if (res.data.success) {
       const admin = {
         name: data.name,
         role: data.role,
         companyName: data.companyName,
         birthDate: data.birthDate,
-        image: res.data.data.display_url,
-        companyLogo: data.companyLogo,
+        image: imageResponse.data.data.display_url,
+        companyLogo: logoResponse.data.data.display_url,
         email: data.email,
         package: data.package,
       };
@@ -63,8 +63,8 @@ const AddHrAdmin = () => {
         .then((result) => {
           const loggedUser = result.user;
           console.log("admin", loggedUser);
-          updateUserProfile(data.name, data.photoUrl).then(() => {
-            axiosPublic.post("/users", admin);
+          updateUserProfile(data.name, data.photoUrl).then( async () => {
+           const res = await axiosPublic.post("/users", admin);
             if (res.data.insertedId) {
               console.log("Admin added");
               Swal.fire({
@@ -77,13 +77,10 @@ const AddHrAdmin = () => {
             }
           });
         })
-        .then((error) => {
-          console.log(error);
+        .then(() => {
+          // console.log(error);
         });
     }
-  // } catch (error) {
-  //   console.error("Error:", error);
-  // }
   };
   return (
     <div>

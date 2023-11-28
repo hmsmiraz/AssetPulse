@@ -44,7 +44,7 @@ export const router = createBrowserRouter([
       // user's route
       {
         path: "/userHome",
-        element: <UserHome></UserHome>
+        element: <UserHome></UserHome>,
       },
       {
         path: "/myAssets",

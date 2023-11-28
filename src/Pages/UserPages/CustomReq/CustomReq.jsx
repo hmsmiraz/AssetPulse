@@ -2,10 +2,13 @@ import { useForm } from "react-hook-form";
 import SharedTitle from "../../../Shared/SharedTitle";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import UseAuth from "../../../Hooks/UseAuth";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const CustomReq = () => {
+  const {user} = UseAuth();
+  // console.log(user.email)
   const {
     reset,
     register,
@@ -40,6 +43,8 @@ const CustomReq = () => {
       price: parseFloat(data.price),
       image: res.data.data.display_url,
       date: data.date,
+      email: user.email,
+      status: "requested",
     };
     const result = await axiosPublic.post('/customReq', assetReq)
     if(result.data.insertedId){

@@ -22,7 +22,7 @@ const AddAsset = () => {
     },
   });
   const axiosPublic = useAxiosPublic();
-
+  const date = new Date();
   const onSubmit = async (data) => {
     console.log("Asset data:", data);
 
@@ -39,6 +39,7 @@ const AddAsset = () => {
         stockQuantity: data.stockQuantity,
         price: parseFloat(data.price),
         image: res.data.data.display_url,
+        addDate: date,
       };
       const result = await axiosPublic.post('/assets', asset)
       if(result.data.insertedId){
