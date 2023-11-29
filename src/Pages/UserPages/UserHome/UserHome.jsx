@@ -10,6 +10,7 @@ import { CardMedia, TextField } from "@mui/material";
 import UseAuth from "../../../Hooks/UseAuth";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 const style = {
   position: "absolute",
   top: "50%",
@@ -73,7 +74,7 @@ const UserHome = () => {
     // updatedEditableItem.name = event.target.value;
     setEdit(false);
     console.log(editableItem);
-    const res = await axiosPublic.patch(`/customReq/${id}`, editableItem);
+    const res = await axiosPublic.put(`/customReq/${id}`, editableItem);
     console.log(editableItem.data);
     if (res.data.modifiedCount > 0) {
       Swal.fire({
@@ -89,6 +90,9 @@ const UserHome = () => {
   const filteredList = customReq.filter((reqList) => reqList.email == email);
   return (
     <div>
+      <Helmet>
+        <title>AssetPulse | User Home</title>
+      </Helmet>
       <SharedTitle heading={"Your All Custom Requests"}></SharedTitle>
       <div className="overflow-x-auto">
         <table className="table w-full">

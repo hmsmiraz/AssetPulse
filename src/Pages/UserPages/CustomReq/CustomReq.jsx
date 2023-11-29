@@ -40,7 +40,7 @@ const CustomReq = () => {
       type: data.type,
       reason: data.reason,
       additionalInfo: data.additionalInfo,
-      price: parseFloat(data.price),
+      price: parseInt(data.price),
       image: res.data.data.display_url,
       date: data.date,
       email: user.email,

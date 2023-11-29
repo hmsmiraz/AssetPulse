@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useAsset from "../../../Hooks/UseAsset";
 import SharedTitle from "../../../Shared/SharedTitle";
-import { Button } from "@mui/material";
+import { Button, Pagination, Stack } from "@mui/material";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
@@ -70,89 +70,94 @@ const AssetList = () => {
     });
   };
   return (
-    <div>
-      <SharedTitle heading={"All Asset is Here"}></SharedTitle>
-      <div className="flex flex-col md:flex-row items-center justify-center gap-10 my-5">
-        {/* name search */}
-        <div>
-          <form
-            onSubmit={handleSearchByName}
-            className="flex items-center justify-center"
-          >
-            <div className="form-control">
-              <input
-                type="text"
-                placeholder="Search By name"
-                name="searchByName"
-                className="input input-bordered w-24 md:w-48"
-                value={searchByName}
-                onChange={handleSearchByName}
-              />
-            </div>
-          </form>
+    <Stack spacing={2}>
+      <div>
+        <SharedTitle heading={"All Asset is Here"}></SharedTitle>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-10 my-5">
+          {/* name search */}
+          <div>
+            <form
+              onSubmit={handleSearchByName}
+              className="flex items-center justify-center"
+            >
+              <div className="form-control">
+                <input
+                  type="text"
+                  placeholder="Search By name"
+                  name="searchByName"
+                  className="input input-bordered w-24 md:w-48"
+                  value={searchByName}
+                  onChange={handleSearchByName}
+                />
+              </div>
+            </form>
+          </div>
+          {/* category search */}
+          <div>
+            <form
+              onSubmit={handleSearchByType}
+              className="flex items-center justify-center"
+            >
+              <div className="form-control">
+                <select
+                  className="select select-bordered"
+                  type="text"
+                  name="filterByType"
+                  required
+                  value={filterByType}
+                  onChange={handleSearchByType}
+                >
+                  <option value="returnable">Returnable</option>
+                  <option value="nonReturnable">Non-returnable</option>
+                </select>
+              </div>
+            </form>
+          </div>
         </div>
-        {/* category search */}
-        <div>
-          <form
-            onSubmit={handleSearchByType}
-            className="flex items-center justify-center"
-          >
-            <div className="form-control">
-              <select
-                className="select select-bordered"
-                type="text"
-                name="filterByType"
-                required
-                value={filterByType}
-                onChange={handleSearchByType}
-              >
-                <option value="returnable">Returnable</option>
-                <option value="nonReturnable">Non-returnable</option>
-              </select>
-            </div>
-          </form>
-        </div>
-      </div>
-      <div className="my-5">
-        <div className="overflow-x-auto mx-2">
-          <table className="table w-full">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Asset Name</th>
-                <th>Type</th>
-                <th>Quantity</th>
-                <th>Date Added</th>
-                <th>Action</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredAssets.map((item, index) => (
-                <tr key={item._id}>
-                  <th>{index + 1}</th>
-                  <td>{item.name}</td>
-                  <td>{item.type}</td>
-                  <td>{item.stockQuantity}</td>
-                  <td>{item.reqData}</td>
-                  <td>
-                    <Button>
-                      <FaEdit></FaEdit>
-                    </Button>
-                  </td>
-                  <td>
-                    <Button onClick={() => handleDelete(item)}>
-                      <FaTrash></FaTrash>
-                    </Button>
-                  </td>
+        <div className="my-5">
+          <div className="overflow-x-auto mx-2">
+            <table className="table w-full">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Asset Name</th>
+                  <th>Type</th>
+                  <th>Quantity</th>
+                  <th>Date Added</th>
+                  <th>Action</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {filteredAssets.map((item, index) => (
+                  <tr key={item._id}>
+                    <th>{index + 1}</th>
+                    <td>{item.name}</td>
+                    <td>{item.type}</td>
+                    <td>{item.stockQuantity}</td>
+                    <td>{item.reqData}</td>
+                    <td>
+                      <Button>
+                        <FaEdit></FaEdit>
+                      </Button>
+                    </td>
+                    <td>
+                      <Button onClick={() => handleDelete(item)}>
+                        <FaTrash></FaTrash>
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
+      <div className="flex items-center justify-center pb-5">
+        <Pagination count={10} color="primary" />
+      </div>
+    </Stack>
   );
 };
 

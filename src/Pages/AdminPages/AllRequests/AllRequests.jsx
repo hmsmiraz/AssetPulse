@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
 import useAssetReq from "../../../Hooks/useAssetReq";
 import SharedTitle from "../../../Shared/SharedTitle";
-import { FcApproval, FcDisapprove } from "react-icons/fc";
+import { FcDisapprove } from "react-icons/fc";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useState } from "react";
@@ -38,7 +38,6 @@ const AllRequests = () => {
         const res = await axiosPublic.delete(`/assetReq/${item._id}`);
         console.log(res.data);
         if (res.data.deletedCount > 0) {
-          refetch();
           Swal.fire({
             position: "center",
             icon: "success",
@@ -46,7 +45,23 @@ const AllRequests = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          refetch();
         }
+      }
+    });
+  };
+  const handleApproved = (item) => {
+    axiosPublic.patch(`/assetReq/${item._id}`).then((res) => {
+      console.log(res.data);
+      if (res.data.modifiedCount > 0) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: `${item.name} has been Approved!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        refetch();
       }
     });
   };
@@ -85,7 +100,7 @@ const AllRequests = () => {
                   <th>Name of requester</th>
                   <th>Request Date</th>
                   <th>Note</th>
-                  <th>Status</th>
+                  {/* <th>Status</th> */}
                   <th>Action</th>
                   <th>Action</th>
                 </tr>
@@ -100,14 +115,20 @@ const AllRequests = () => {
                     <td>{item.userName}</td>
                     <td>{item.reqDate}</td>
                     <td>{item.note}</td>
-                    <td>{item.status}</td>
                     <td>
-                      <Button className="tooltip" data-tip="Approved">
-                        <FcApproval
-                          className="text-2xl tooltip"
-                          data-tip="Approve"
-                        ></FcApproval>
-                      </Button>
+                      {item?.status === "requested" ? (
+                        <Button
+                          onClick={() => handleApproved(item)}
+                          className="tooltip"
+                          data-tip="requested"
+                        >
+                          Requested
+                        </Button>
+                      ) : (
+                        <Button className="tooltip" data-tip="Approved">
+                          Approved
+                        </Button>
+                      )}
                     </td>
                     <td>
                       <Button
