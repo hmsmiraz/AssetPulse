@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
 const AssetList = () => {
-  const [assets, refetch] = useAsset();
+  const [assets, ,refetch] = useAsset();
   const axiosPublic = useAxiosPublic();
 
   const [searchByName, setSearchByName] = useState("");
@@ -92,7 +92,7 @@ const AssetList = () => {
               </div>
             </form>
           </div>
-          {/* category search */}
+          {/* type search */}
           <div>
             <form
               onSubmit={handleSearchByType}

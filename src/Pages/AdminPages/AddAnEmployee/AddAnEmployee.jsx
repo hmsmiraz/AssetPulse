@@ -30,7 +30,7 @@ const AddAnEmployee = () => {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: `${user.name} is updated to the users.`,
+        title: `${user.name} is added to your teams.`,
         showConfirmButton: false,
         timer: 1500,
       });

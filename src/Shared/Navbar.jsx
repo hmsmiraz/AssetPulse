@@ -2,11 +2,21 @@ import { Link } from "react-router-dom";
 import UseAuth from "../Hooks/UseAuth";
 import useAdmin from "../Hooks/useAdmin";
 import useEmployee from "../Hooks/useEmployee";
+import useUsers from "../Hooks/useUsers";
 
 const Navbar = () => {
   const { user, logOut } = UseAuth();
   const [isAdmin] = useAdmin();
   const [isEmployee] = useEmployee();
+  const [users] = useUsers();
+  const email = user?.email;
+  const mainUsers = users?.filter((user) => user.email == email);
+  // console.log(mainUsers);
+  const companyName = mainUsers[0]?.companyName;
+  const companyLogo = mainUsers[0]?.companyLogo;
+  const Name = mainUsers[0]?.name;
+  const Image = mainUsers[0]?.image;
+  // console.log(Name, Image, companyName, companyLogo);
   const navLinks = (
     <>
       {/* navbar for normal user */}
@@ -129,28 +139,59 @@ const Navbar = () => {
             {navLinks}
           </ul>
         </div>
-        <img src="/a.svg" alt="" className="w-6 h-6" />
-        <a className="btn btn-ghost text-xl">AssetPulse</a>
+        {user ? (
+          <img src={companyLogo} alt="" className="w-8 h-8 rounded-lg" />
+        ) : (
+          <img src="/a.svg" alt="" className="w-6 h-6" />
+        )}
+        {user ? (
+          <a className="btn btn-ghost text-xl">{companyName}</a>
+        ) : (
+          <a className="btn btn-ghost text-xl">AssetPulse</a>
+        )}
+       
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
       <div className="navbar-end">
-        {user ? (
-          <>
-            <Link>
-              <button onClick={handleLogout} className="btn btn-neutral">
-                Logout
-              </button>
-            </Link>
-          </>
-        ) : (
-          <>
-            <Link to={"/login"}>
-              <button className="btn btn-neutral">Login</button>
-            </Link>
-          </>
-        )}
+        <div className="flex flex-col md:flex-row items-center justify-center">
+          <div>
+            {user ? (
+              <p className="font-light text-xs w-10 lg:w-20">{Name}</p>
+            ) : (
+              ""
+            )}
+          </div>
+          <div>
+            {user ? (
+              <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                <div className="w-5 lg:w-10 rounded-full">
+                  <img src={Image} />
+                </div>
+              </label>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
+        <div className="">
+          {user ? (
+            <>
+              <Link>
+                <button onClick={handleLogout} className="btn btn-neutral">
+                  Logout
+                </button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to={"/login"}>
+                <button className="btn btn-neutral">Login</button>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
