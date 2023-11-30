@@ -16,12 +16,6 @@ const AddHrAdmin = () => {
   const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
   const onSubmit = async (data) => {
-    // const priceOfPackage = {
-    //   price: data.package
-    // };
-    // console.log(data);
-    // const imageFile = { image: data.image[0] };
-    // const companyLogo = { companyLogo: data.companyLogo[0] };
     const imageFile = new FormData();
     imageFile.append("image", data.image[0]);
 
@@ -40,18 +34,6 @@ const AddHrAdmin = () => {
         },
       }),
     ]);
-    // const res = await axios.post(
-    //   image_hosting_api,
-    //   // imageFile,
-    //   { image: imageFile, companyLogo: companyLogo },
-    //   {
-    //     headers: {
-    //       "content-type": "multipart/form-data",
-    //     },
-    //   }
-    // );
-    // console.log(res);
-    // console.log(imageResponse, logoResponse);
     if (imageResponse.data.success && logoResponse.data.success) {
       // if (res.data.success) {
       const admin = {
@@ -68,11 +50,11 @@ const AddHrAdmin = () => {
       createUser(data.email, data.password)
         .then((result) => {
           const loggedUser = result.user;
-          console.log("admin", loggedUser);
+          // console.log("admin", loggedUser);
           updateUserProfile(data.name, data.photoUrl).then(async () => {
             const res = await axiosPublic.post("/users", admin);
             if (res.data.insertedId) {
-              console.log("Admin added");
+              console.log("Admin added", admin);
               Swal.fire({
                 position: "top-end",
                 icon: "success",

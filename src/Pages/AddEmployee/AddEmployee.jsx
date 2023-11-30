@@ -4,6 +4,7 @@ import UseAuth from "../../Hooks/UseAuth";
 import SocialLogin from "../../Components/SocialLogin/SocialLogin";
 import Swal from "sweetalert2";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { useNavigate } from "react-router-dom";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -12,6 +13,7 @@ const AddEmployee = () => {
   const { register, handleSubmit } = useForm();
   const { createUser, updateUserProfile } = UseAuth();
   const axiosPublic = useAxiosPublic();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     // console.log("Data", data);
@@ -28,8 +30,12 @@ const AddEmployee = () => {
         birthDate: data.birthDate,
         image: res.data.data.display_url,
         email: data.email,
+        hasTeam: "no",
+        companyName: "",
+        companyLogo: "",
+        adminEmail: "",
       };
-      console.log(employee)
+      console.log(employee);
       createUser(data.email, data.password)
         .then((result) => {
           const loggedUser = result.user;
@@ -45,6 +51,7 @@ const AddEmployee = () => {
                 showConfirmButton: false,
                 timer: 1500,
               });
+              navigate("/");
             }
           });
         })
