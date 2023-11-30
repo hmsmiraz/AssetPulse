@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import { useState } from "react";
 const AllRequests = () => {
-  const [assetsReq, refetch] = useAssetReq();
+  const [assetsReq, , refetch] = useAssetReq();
   const axiosPublic = useAxiosPublic();
   const [searchByEmail, setSearchByEmail] = useState("");
 
@@ -50,6 +50,7 @@ const AllRequests = () => {
       }
     });
   };
+
   const handleApproved = (item) => {
     axiosPublic.patch(`/assetReq/${item._id}`).then((res) => {
       console.log(res.data);

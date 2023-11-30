@@ -36,8 +36,8 @@ const AddAsset = () => {
       const asset = {
         name: data.name,
         type: data.type,
-        stockQuantity: data.stockQuantity,
-        price: parseFloat(data.price),
+        stockQuantity: parseInt(data.stockQuantity),
+        price: parseInt(data.price),
         image: res.data.data.display_url,
         addDate: date,
       };

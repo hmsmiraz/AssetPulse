@@ -5,7 +5,7 @@ import SharedTitle from "../../../Shared/SharedTitle";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { useState } from "react";
 const AddAnEmployee = () => {
-  const [users, refetch] = useUsers();
+  const [users, , refetch] = useUsers();
   const axiosPublic = useAxiosPublic();
   const [buttonText, setButtonText] = useState("Add Your Team");
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -15,7 +15,7 @@ const AddAnEmployee = () => {
   const adminEmail = admin?.email;
   //   console.log(companyName, companyLogo);
 
-  const handleAddTeam = async (user,companyName, companyLogo, adminEmail) => {
+  const handleAddTeam = async (user) => {
     console.log(user.name);
     const addTeam = {
       hasTeam: "yes",
@@ -84,10 +84,10 @@ const AddAnEmployee = () => {
                   </td>
                   <th>{user?.role}</th>
                   <th>
-                    {user?.role === "Admin" ? (
+                    {user?.role === "Admin" || user?.hasTeam === "yes" ? (
                       <button
                         disabled={isButtonDisabled}
-                        className="btn btn-ghost btn-sm"
+                        className="btn btn-ghost btn-sm text-gray-200"
                         data-tip={buttonText}
                       >
                         <IoPersonAddSharp className="text-2xl" />

@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 const CustomReqList = () => {
-  const [customReq, refetch] = useCustomReq();
+  const [customReq, , refetch] = useCustomReq();
   const axiosPublic = useAxiosPublic();
   const handleDelete = (item) => {
     Swal.fire({
