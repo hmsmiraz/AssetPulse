@@ -1,12 +1,12 @@
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UseAuth from "./UseAuth";
 
 export const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000'
+    baseURL: 'https://asset-pulse-server.vercel.app'
 });
 const useAxiosSecure = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const { logOut } = UseAuth();
     axiosSecure.interceptors.request.use(function (config){
         
@@ -23,7 +23,7 @@ const useAxiosSecure = () => {
         const status = error?.response?.status;
         if(status === 401 || status === 403){
             await logOut();
-            // navigate('/login');
+            navigate('/login');
         }
         return Promise.reject(error);
     })

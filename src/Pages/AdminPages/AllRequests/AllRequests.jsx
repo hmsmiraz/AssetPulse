@@ -52,7 +52,8 @@ const AllRequests = () => {
   };
 
   const handleApproved = (item) => {
-    axiosPublic.patch(`/assetReq/${item._id}`).then((res) => {
+    console.log(item.assetId)
+    axiosPublic.patch("/assetReq/assetId").then((res) => {
       console.log(res.data);
       if (res.data.modifiedCount > 0) {
         Swal.fire({

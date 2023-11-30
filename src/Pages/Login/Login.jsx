@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 const Login = () => {
   const { signIn } = UseAuth();
   const navigate = useNavigate();
+
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -22,7 +23,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/");
+       
       })
       .then(() => {
         //console.log(err);
@@ -70,9 +71,10 @@ const Login = () => {
               className="btn btn-primary rounded-md mt-2"
               value="Login"
             />
-            <p className="text-center py-2 ">New Here? Create an account Please </p>
+            <p className="text-center py-2 ">
+              New Here? Create an account Please{" "}
+            </p>
             <div className="flex gap-2 flex-col md:flex-row items-center justify-center">
-              
               <div className="">
                 <Link to={"/addEmployee"} className="text font-bold">
                   <button className="btn bg-blue-600 rounded-md text-white">
