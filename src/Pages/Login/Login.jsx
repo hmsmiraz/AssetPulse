@@ -23,7 +23,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-       
+        navigate("/");
       })
       .then(() => {
         //console.log(err);

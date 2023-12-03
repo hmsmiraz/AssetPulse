@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import useAxiosPublic from "../../../Hooks/useAxiosPublic";
 
 const AssetList = () => {
-  const [assets, ,refetch] = useAsset();
+  const [assets, , refetch] = useAsset();
   const axiosPublic = useAxiosPublic();
 
   const [searchByName, setSearchByName] = useState("");
@@ -122,6 +122,7 @@ const AssetList = () => {
                 <tr>
                   <th>#</th>
                   <th>Asset Name</th>
+                  <th>Image</th>
                   <th>Type</th>
                   <th>Quantity</th>
                   <th>Date Added</th>
@@ -134,9 +135,19 @@ const AssetList = () => {
                   <tr key={item._id}>
                     <th>{index + 1}</th>
                     <td>{item.name}</td>
+                    <td>
+                      <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
+                          <img
+                            src={item.image}
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
+                      </div>
+                    </td>
                     <td>{item.type}</td>
                     <td>{item.stockQuantity}</td>
-                    <td>{item.reqData}</td>
+                    <td>{item.addDate}</td>
                     <td>
                       <Button>
                         <FaEdit></FaEdit>
